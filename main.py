@@ -2,6 +2,9 @@ from kivymd.app import MDApp
 from kivy.lang import Builder
 import Nsound as ns
 
+class SoundButton():
+	pass
+
 class MenuApp(MDApp):
 	def __init__(self, **kw):
 		super().__init__(**kw)
@@ -13,6 +16,7 @@ class MenuApp(MDApp):
 		s = ns.Sine(44100.0)
 		a << s.generate(1.0, 50.0)
 		# playback
+		ns.use("portaudio")
 		a >> ns.AudioPlayback(a.getSampleRate(), a.getNChannels(), 16)
 	def build(self):
 		self.theme_cls.primary_palette = "LightGreen"
