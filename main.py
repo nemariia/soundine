@@ -34,6 +34,7 @@ class MenuApp(MDApp):
 	def set_color(self, ev):
 		clr_picker = ColorPicker()
 		clr_picker.bind(color=self.on_color)
+		# get a reference to the whole composit button
 		self.btn_clicked = ev.parent.parent
         # set the dialog component
 		self.color = MDDialog(
