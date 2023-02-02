@@ -6,11 +6,14 @@
 		width: self.parent.width
 		height: self.parent.height - dp(48)
 		line_color: "black"
+		signal: None
+		on_release: app.playback(self)
 	MDGridLayout:
 		cols: 2
 		rows: 1
 		MDIconButton:
 			icon: "music-note-plus"
+			on_release: app.set_wave(self)
 		MDIconButton:
 			icon: "pencil"
 			on_release: app.set_color(self)

@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.button import MDFlatButton
+from kivymd.uix.textfield import MDTextField
 import sounddevice as sd
 import numpy as np
 import math
@@ -19,12 +20,10 @@ class MenuApp(MDApp):
 		sd.default.samplerate = 44100
 		signal = self.sinewawe(150, 1)
 
-		# get a output stream where we can play samples
-		self.stream = sd.Stream()
 
-
-	def playback(signal):
-		sd.play(signal)
+	def playback(self, ev):
+		if str(ev.signal) != str(None):
+			sd.play(ev.signal)
 
 	def sinewawe(self, f, t, fs = 44100):
 		time = np.arange(t * fs) / fs
@@ -60,6 +59,40 @@ class MenuApp(MDApp):
 		
 	def on_color(self, instance, value):
 		self.btn_clicked.md_bg_color = value
+
+	def set_wave(self, ev):
+		# get a reference to the whole composit button
+		self.btn_clicked = ev.parent.parent.children[1]
+		print(self.btn_clicked)
+		# set the input components
+		f = MDTextField(hint_text = "Base frequency")
+		t = MDTextField(hint_text = "Time")
+        # set the dialog component
+		self.wave = MDDialog(
+			title="Set a wave",
+			type="custom",
+			content_cls=MDBoxLayout(
+				f,
+				t,
+				orientation="vertical",
+				spacing="12dp",
+				size_hint_y=None,
+				height="120dp",
+                ),
+            buttons=[
+                MDFlatButton(
+                    text="OK",
+                    theme_text_color="Custom",
+                    text_color=self.theme_cls.primary_color,
+                    on_release=lambda x: self.on_wave(f.text, t.text)
+                ),
+            ],
+        )
+		self.wave.open()
+
+	def on_wave(self, f, t):
+		self.btn_clicked.signal = self.sinewawe(float(f), float(t))
+		self.wave.dismiss()
 
 	def build(self):
 		self.theme_cls.primary_palette = "LightGreen"
