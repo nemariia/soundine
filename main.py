@@ -58,7 +58,8 @@ class MenuApp(MDApp):
 		self.color.open()
 		
 	def on_color(self, instance, value):
-		self.btn_clicked.md_bg_color = value
+		self.btn_clicked.background_normal = ""
+		self.btn_clicked.background_color = value
 
 	def build(self):
 		self.theme_cls.primary_palette = "LightGreen"
