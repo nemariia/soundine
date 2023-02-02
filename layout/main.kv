@@ -1,6 +1,18 @@
-<SoundButton@Button>:
-	line_color: "black"
-	on_release: app.set_color(self)
+<SoundButton@MDGridLayout>:
+	cols: 1
+	rows: 2
+	MDFlatButton:
+		size_hint: None, None
+		line_color: "black"
+	MDGridLayout:
+		cols: 2
+		rows: 1
+		MDFlatButton:
+			line_color: "black"
+			background_normal: "static//paintbrush.png"
+		MDIconButton:
+			icon: "pencil"
+			on_release: app.set_color(self)
 
 
 MDBoxLayout:

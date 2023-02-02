@@ -34,7 +34,7 @@ class MenuApp(MDApp):
 	def set_color(self, ev):
 		clr_picker = ColorPicker()
 		clr_picker.bind(color=self.on_color)
-		self.btn_clicked = ev
+		self.btn_clicked = ev.parent.parent
         # set the dialog component
 		self.color = MDDialog(
 			title="Choose a color",
@@ -58,8 +58,7 @@ class MenuApp(MDApp):
 		self.color.open()
 		
 	def on_color(self, instance, value):
-		self.btn_clicked.background_normal = ""
-		self.btn_clicked.background_color = value
+		self.btn_clicked.md_bg_color = value
 
 	def build(self):
 		self.theme_cls.primary_palette = "LightGreen"
